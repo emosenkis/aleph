@@ -28,7 +28,12 @@
     for (let i = 0; i < PAIRS; i++) {
       vowelPairs.push([VOWEL_PAIRS[pairOrder[i]][pairSwap[i]], VOWEL_PAIRS[pairOrder[(i + 2) % PAIRS]][(pairSwap[((i + 2) % PAIRS)] + 1) % 2]]);
     }
+    console.log(vowelPairs.flat().map(x => 'א' + x).join(' '));
     const EL = document.getElementById('d');
+    function set(l) {
+      console.log(l);
+      EL.innerText = l;
+    }
     let pairIdx = -1;
     let letterIdx = LETTERS.length - 1;
     let letters;
@@ -38,11 +43,12 @@
         letterIdx = -1;
         pairIdx++;
         letters = _.shuffle(LETTERS);
-        EL.innerText = pairIdx == 0 ? '😉' : '😊';
+        set(pairIdx == 0 ? '😉' : '😊');
         return;
       }
       if (pairIdx >= PAIRS) {
-        EL.innerText = '🎉';
+        set('🎉');
+        document.removeEventListener('click', advance);
       } else {
         const letter = letters[letterIdx];
         const vowel = _.sample(vowelPairs[pairIdx]);
@@ -51,8 +57,7 @@
           advance();
           return;
         }
-        EL.innerText = letter + vowel;
-        console.log(EL.innerText);
+        set(letter + vowel);
       }
     }
     document.addEventListener('click', advance);
