@@ -38,7 +38,7 @@
         letterIdx = -1;
         pairIdx++;
         letters = _.shuffle(LETTERS);
-        EL.innerText = '😊';
+        EL.innerText = pairIdx == 0 ? '😉' : '😊';
         return;
       }
       if (pairIdx >= PAIRS) {
@@ -52,9 +52,11 @@
           return;
         }
         EL.innerText = letter + vowel;
+        console.log(EL.innerText);
       }
     }
     document.addEventListener('click', advance);
+    advance();
   </script>
 </body>
 </html>
