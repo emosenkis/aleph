@@ -43,22 +43,27 @@
         letterIdx = -1;
         pairIdx++;
         letters = _.shuffle(LETTERS);
-        set(pairIdx == 0 ? '😉' : '😊');
+        switch (pairIdx) {
+          case 0:
+            set('😉');
+            break;
+          case PAIRS:
+            set('🎉');
+            document.removeEventListener('click', advance);
+            break;
+          default:
+            set('😊');
+        }
         return;
       }
-      if (pairIdx >= PAIRS) {
-        set('🎉');
-        document.removeEventListener('click', advance);
-      } else {
-        const letter = letters[letterIdx];
-        const vowel = _.sample(vowelPairs[pairIdx]);
-        // Disallow yud-yud and shin/sin/ followed by holam without a vav
-        if (letter + vowel == "י\u05B4י" || (letter.startsWith("ש") && vowel == "\u05B9")) {
-          advance();
-          return;
-        }
-        set(letter + vowel);
+      const letter = letters[letterIdx];
+      const vowel = _.sample(vowelPairs[pairIdx]);
+      // Disallow yud-yud and shin/sin/ followed by holam without a vav
+      if (letter + vowel == "י\u05B4י" || (letter.startsWith("ש") && vowel == "\u05B9")) {
+        advance();
+        return;
       }
+      set(letter + vowel);
     }
     document.addEventListener('click', advance);
     advance();
