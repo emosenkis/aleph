@@ -22,7 +22,7 @@
     const LETTERS = "אבּבגדהוזחוטיכּכלמנסעפּפצקרשת".match(/\p{Grapheme_Base}\p{Grapheme_Extend}|\p{Grapheme_Base}/gu);
     const VOWEL_PAIRS = [["\u05B6", "\u05B5"], ["\u05B4", "\u05B4י"], ["\u05B7", "\u05B8"], ["\u05B9", "ו\u05B9"], ["\u05BB", "ו\u05BC"]];
     const PAIRS = VOWEL_PAIRS.length;
-    const pairOrder = _.shuffle(VOWEL_PAIRS.map((_, i) => i));
+    const pairOrder = _.shuffle(VOWEL_PAIRS.map((unused, i) => i));
     const pairSwap = pairOrder.map(_.sample([0, 1]));
     const vowelPairs = [];
     for (let i = 0; i < PAIRS; i++) {
