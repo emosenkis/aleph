@@ -17,7 +17,7 @@
       transform: translate(-50%, -50%);
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/core.min.js" integrity="sha256-3h+sCtOgMXT05Jlp9I0uSZ0Zr80HbbGUMdexzXB4Mvo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
   <script>
     const LETTERS = "אבּבגדהוזחוטיכּכלמנסעפּפצקרשת".match(/\p{Grapheme_Base}\p{Grapheme_Extend}|\p{Grapheme_Base}/gu);
     const VOWEL_PAIRS = [["\u05B6", "\u05B5"], ["\u05B4", "\u05B4י"], ["\u05B7", "\u05B8"], ["\u05B9", "ו\u05B9"], ["\u05BB", "ו\u05BC"]];
@@ -26,7 +26,7 @@
     const pairSwap = pairOrder.map(_.sample([0, 1]));
     const vowelPairs = [];
     for (let i = 0; i < PAIRS; i++) {
-      vowelPairs.push([VOWEL_PAIRS[pairOrder[i]][pairSwap[i]], VOWEL_PAIRS[pairOrder[(i + 1) % PAIRS]][pairSwap[((i + 1) % PAIRS) + 1) % 2]]]);
+      vowelPairs.push([VOWEL_PAIRS[pairOrder[i]][pairSwap[i]], VOWEL_PAIRS[pairOrder[(i + 1) % PAIRS]][pairSwap[(((i + 1) % PAIRS) + 1) % 2]]]);
     }
   </script>
 </body>
