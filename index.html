@@ -26,7 +26,7 @@
     const pairSwap = VOWEL_PAIRS.map(() => _.sample([0, 1]));
     const vowelPairs = [];
     for (let i = 0; i < PAIRS; i++) {
-      vowelPairs.push([VOWEL_PAIRS[pairOrder[i]][pairSwap[i]], VOWEL_PAIRS[pairOrder[(i + 1) % PAIRS]][pairSwap[(((i + 1) % PAIRS) + 1) % 2]]]);
+      vowelPairs.push([VOWEL_PAIRS[pairOrder[i]][pairSwap[i]], VOWEL_PAIRS[pairOrder[(i + 2) % PAIRS]][(pairSwap[((i + 2) % PAIRS)] + 1) % 2]]);
     }
     const EL = document.getElementById('d');
     let pairIdx = -1;
