@@ -28,6 +28,28 @@
     for (let i = 0; i < PAIRS; i++) {
       vowelPairs.push([VOWEL_PAIRS[pairOrder[i]][pairSwap[i]], VOWEL_PAIRS[pairOrder[(i + 1) % PAIRS]][pairSwap[(((i + 1) % PAIRS) + 1) % 2]]]);
     }
+    const EL = document.getElementById('d');
+    let pairIdx = -1;
+    let letterIdx = LETTERS.length - 1;
+    let letters;
+    function advance() {
+      letterIdx++;
+      if (letterIdx == LETTERS.length) {
+        letterIdx = -1;
+        pairIdx++;
+        letters = _.shuffle(LETTERS);
+        if (pairIdx > 0) {
+          EL.innerText = '😊';
+          return;
+        }
+      }
+      if (pairIdx >= PAIRS) {
+        EL.innerText = '🎉';
+      } else {
+        EL.innerText = letters[letterIdx] + _.sample(vowelPairs[pairIdx]);
+      }
+    }
+    document.addEventListener('click', advance);
   </script>
 </body>
 </html>
