@@ -4,7 +4,30 @@
 <title>Aleph</title>
 </head>
 <body>
-<script>
-</script>
+  <div id="d" class="center"></div>
+  <style>
+    #d {
+      font-size: calc(min(25vmin, 2in));
+    }
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/core.min.js" integrity="sha256-3h+sCtOgMXT05Jlp9I0uSZ0Zr80HbbGUMdexzXB4Mvo=" crossorigin="anonymous"></script>
+  <script>
+    const LETTERS = "אבּבגדהוזחוטיכּכלמנסעפּפצקרשת".match(/\p{Grapheme_Base}\p{Grapheme_Extend}|\p{Grapheme_Base}/gu);
+    const VOWEL_PAIRS = [["\u05B6", "\u05B5"], ["\u05B4", "\u05B4י"], ["\u05B7", "\u05B8"], ["\u05B9", "ו\u05B9"], ["\u05BB", "ו\u05BC"]];
+    const PAIRS = VOWEL_PAIRS.length;
+    const pairOrder = _.shuffle(VOWEL_PAIRS.map((_, i) => i));
+    const pairSwap = pairOrder.map(_.sample([0, 1]));
+    const vowelPairs = [];
+    for (let i = 0; i < PAIRS; i++) {
+      vowelPairs.push([VOWEL_PAIRS[pairOrder[i]][pairSwap[i]], VOWEL_PAIRS[pairOrder[(i + 1) % PAIRS]][pairSwap[((i + 1) % PAIRS] + 1) % 2]]);
+    }
+  </script>
 </body>
 </html>
