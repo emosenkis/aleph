@@ -20,7 +20,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
   <script>
     const LETTERS = "אבּבגדהוזחוטיכּכלמנסעפּפצקרשׁשׂת".match(/\p{Grapheme_Base}\p{Grapheme_Extend}|\p{Grapheme_Base}/gu);
-    const VOWEL_PAIRS = [["\u05B6", "\u05B5"], ["\u05B4", "\u05B4י"], ["\u05B7", "\u05B8"], ["\u05BA", "ו\u05B9"], ["\u05BB", "ו\u05BC"]];
+    const VOWEL_PAIRS = [["\u05B6", "\u05B5"], ["\u05B4", "\u05B4י"], ["\u05B7", "\u05B8"], ["\u05B9", "ו\u05BA"], ["\u05BB", "ו\u05BC"]];
     const PAIRS = VOWEL_PAIRS.length;
     const pairOrder = _.shuffle(VOWEL_PAIRS.map((unused, i) => i));
     const pairSwap = VOWEL_PAIRS.map(() => _.sample([0, 1]));
@@ -44,10 +44,14 @@
       if (pairIdx >= PAIRS) {
         EL.innerText = '🎉';
       } else {
-        EL.innerText = letters[letterIdx] + _.sample(vowelPairs[pairIdx]);
-        if (EL.innerText == "י\u05B4י") {
+        const letter = letters[letterIdx];
+        const vowel = _.sample(vowelPairs[pairIdx]);
+        // Disallow yud-yud and shin/sin/ followed by holam without a vav
+        if (letter + vowel == "י\u05B4י" || (letter.startsWith("ש") && vowel == "\u05B9")) {
           advance();
+          return;
         }
+        EL.innerText = letter + vowel;
       }
     }
     document.addEventListener('click', advance);
