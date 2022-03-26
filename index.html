@@ -38,10 +38,8 @@
         letterIdx = -1;
         pairIdx++;
         letters = _.shuffle(LETTERS);
-        if (pairIdx == 0) {
-          EL.innerText = '😊';
-          return;
-        }
+        EL.innerText = '😊';
+        return;
       }
       if (pairIdx >= PAIRS) {
         EL.innerText = '🎉';
