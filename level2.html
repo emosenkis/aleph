@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Aleph</title>
+  </head>
+  <body>
+    <div id="d" class="center"></div>
+    <img id="i" class="center" />
+    <style>
+      #d {
+        font-size: calc(min(35vmin, 2.5in));
+        user-select: none;
+      }
+      #i {
+        max-width: 90%;
+        max-height: 90%;
+      }
+      .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+    <script
+      src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+      integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const LETTERS = "אבּבגדהוזחוטיכּכלמנסעפּפצקרשׁשׂת".match(
+        /\p{Grapheme_Base}\p{Grapheme_Extend}|\p{Grapheme_Base}/gu
+      );
+      const VOWEL_PAIRS = [
+        ["\u05B6", "\u05B5"],
+        ["\u05B4", "\u05B4י"],
+        ["\u05B7", "\u05B8"],
+        ["\u05B9", "ו\u05BA"],
+        ["\u05BB", "ו\u05BC"]
+      ];
+      const PAIRS = VOWEL_PAIRS.length;
+      const pairOrder = _.shuffle(VOWEL_PAIRS.map((unused, i) => i));
+      const pairSwap = VOWEL_PAIRS.map(() => _.sample([0, 1]));
+      const vowelPairs = [];
+      for (let i = 0; i < PAIRS; i++) {
+        vowelPairs.push([
+          VOWEL_PAIRS[pairOrder[i]][pairSwap[i]],
+          VOWEL_PAIRS[pairOrder[(i + 2) % PAIRS]][
+            (pairSwap[(i + 2) % PAIRS] + 1) % 2
+          ]
+        ]);
+      }
+      console.log(
+        vowelPairs
+          .flat()
+          .map((x) => "א" + x)
+          .join(" ")
+      );
+      const EL = document.getElementById("d");
+      const I = document.getElementById("i");
+      function set(l) {
+        console.log(l);
+        EL.innerText = l;
+      }
+      let pairIdx = -1;
+      let letterIdx = LETTERS.length - 1;
+      let letters;
+      function advance() {
+        I.style.display = "none";
+        if (letterIdx + 2 >= LETTERS.length) {
+          letterIdx = -1;
+          pairIdx++;
+          letters = _.shuffle(LETTERS);
+          switch (pairIdx) {
+            case 0:
+              set("😉");
+              break;
+            case 3:
+              EL.innerText = "";
+              I.src =
+                "https://c.tenor.com/Hhrkd8gE_9cAAAAi/dinosandcomics-dinosaur.gif";
+              I.style.display = "block";
+              break;
+            case PAIRS:
+              set(_.sample(["🎉", "🥳"]));
+              document.removeEventListener("click", advance);
+              break;
+            default:
+              set(_.sample(["😊", "🤩", "😎"]));
+          }
+          return;
+        }
+        const letter1 = letters[++letterIdx];
+        const letter2 = letters[++letterIdx];
+        const vowel1 = _.sample(vowelPairs[pairIdx]);
+        const vowel2 = _.sample(vowelPairs[pairIdx]);
+        const challenge = letter1 + vowel1 + letter2 + vowel2;
+        const charsOnly = challenge.replace(/\p{Grapheme_Extend}/, "");
+        // Disallow yud-yud, yud-hei, and shin/sin followed by holam without a vav
+        if (
+          ["יי", "יה"].includes(charsOnly) ||
+          (letter1.startsWith("ש") && vowel1 == "\u05B9") ||
+          (letter2.startsWith("ש") && vowel2 == "\u05B9")
+        ) {
+          advance();
+          return;
+        }
+        set(challenge);
+      }
+      document.addEventListener("click", advance);
+      advance();
+    </script>
+  </body>
+</html>
