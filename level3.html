@@ -69,7 +69,7 @@
       let letters;
       function advance() {
         I.style.display = "none";
-        if (letterIdx + 2 >= LETTERS.length) {
+        if (letterIdx + 3 >= LETTERS.length) {
           letterIdx = -1;
           pairIdx++;
           letters = _.shuffle(LETTERS);
@@ -77,10 +77,9 @@
             case 0:
               set("😉");
               break;
-            case 3:
+            case 2:
               EL.innerText = "";
-              I.src =
-                "https://c.tenor.com/Hhrkd8gE_9cAAAAi/dinosandcomics-dinosaur.gif";
+              I.src = "https://c.tenor.com/5mY0_OI1MSUAAAAi/peach-cat.gif";
               I.style.display = "block";
               break;
             case PAIRS:
