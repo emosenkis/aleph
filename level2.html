@@ -103,7 +103,13 @@
         if (
           ["יי", "יה"].includes(charsOnly) ||
           (letter1.startsWith("ש") && vowel1 == "\u05B9") ||
-          (letter2.startsWith("ש") && vowel2 == "\u05B9")
+          (letter2.startsWith("ש") && vowel2 == "\u05B9") ||
+          (letter1.startsWith("י") && vowel1 == "\u05B4י") ||
+          (letter2.startsWith("י") && vowel2 == "\u05B4י") ||
+          (letter1.startsWith("ו") && vowel1 == "ו\u05BA") ||
+          (letter2.startsWith("ו") && vowel2 == "ו\u05BA") ||
+          (letter2.startsWith("ו") && vowel2 == "ו\u05BC") ||
+          (letter2.startsWith("ו") && vowel2 == "ו\u05BC")
         ) {
           advance();
           return;
