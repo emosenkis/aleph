@@ -34,7 +34,7 @@
       const LETTERS = "אבּבגדהוזחוטיכּכלמנסעפּפצקרשׁשׂת".match(
         /\p{Grapheme_Base}\p{Grapheme_Extend}|\p{Grapheme_Base}/gu
       );
-      const SOFIT_LETTERS = "אבּבגדהוזחוטיךלמנסעףץקרשׁשׂת".match(
+      const SOFIT_LETTERS = "אבּבגדהוזחוטיךלמןסעףץקרשׁשׂת".match(
         /\p{Grapheme_Base}\p{Grapheme_Extend}|\p{Grapheme_Base}/gu
       );
       const VOWELS = [
@@ -65,7 +65,7 @@
       function advance() {
         I.style.display = "none";
         switch (step++) {
-          case 1:
+          case 11:
             EL.innerText = "";
             I.src = _.sample([
               "https://c.tenor.com/kwuyggO2hcEAAAAC/minion-woohoo.gif",
