@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Level 4</title>
+  </head>
+  <body>
+    <a href="./">🏠</a>
+    <div id="d" class="center"></div>
+    <img id="i" class="center" />
+    <style>
+      #d {
+        font-size: calc(min(35vmin, 2.5in));
+        user-select: none;
+      }
+      #i {
+        max-width: 90%;
+        max-height: 90%;
+      }
+      .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+    <script
+      src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+      integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const LETTERS = "אבּבגדהוזחוטיכּכלמנסעפּפצקרשׁשׂת".match(
+        /\p{Grapheme_Base}\p{Grapheme_Extend}|\p{Grapheme_Base}/gu
+      );
+      const SOFIT_LETTERS = "אבּבגדהוזחוטיךלמנסעףץקרשׁשׂת".match(
+        /\p{Grapheme_Base}\p{Grapheme_Extend}|\p{Grapheme_Base}/gu
+      );
+      const VOWELS = [
+        "\u05B6",
+        "\u05B5",
+        "\u05B4",
+        "\u05B7",
+        "\u05B8",
+        "\u05B9",
+        "\u05BB"
+      ];
+      const EL = document.getElementById("d");
+      const I = document.getElementById("i");
+      function set(l) {
+        console.log(l);
+        EL.innerText = l;
+      }
+      let step = 0;
+      let letter1,
+        vowel1,
+        letter2,
+        vowel2,
+        letter3,
+        vowel3,
+        letter4,
+        charsOnly,
+        challenge;
+      function advance() {
+        I.style.display = "none";
+        switch (step++) {
+          case 1:
+            EL.innerText = "";
+            I.src = _.sample([
+              "https://c.tenor.com/kwuyggO2hcEAAAAC/minion-woohoo.gif",
+              "https://c.tenor.com/u6r8fswiki4AAAAC/dancing-minion.gif",
+              "https://c.tenor.com/mpCnVpX0xIYAAAAC/high-five-spongebob.gif",
+              "https://c.tenor.com/QivEvZLSO28AAAAC/milk-mocha.gif",
+              "https://c.tenor.com/hfDbTuIoAtcAAAAd/happy-puppy-day-national-puppy-day.gif",
+              "https://c.tenor.com/_g6kzXU1S7EAAAAd/puppies-silly-puppy.gif"
+            ]);
+            I.style.display = "block";
+            console.log(I);
+            break;
+          case 0:
+          case 22:
+            set(
+              _.sample(
+                "😀 😁 😂 🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 🥰 😘 😗 😙 😚 ☺️ 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤 😒 😓 😔 😕 🙃 🤑 😲 ☹️ 🙁 😖 🥵 😞 😟 🥶 🥴 😤 😢 😭 😦 😧 🥳 😨 😩 🤯 😬 😰 😱 😳 🤪 😵 😡 🥺 😠 🤬 😷 🤒 🤕 🤢 🤮 🤧 😇 🤠 🤥 🤫 🤭 🧐 🤓 😈 👿 🤡 👹 👺 💀 ☠️ 👻 👽 👾 🤖 💩 🙊".split(
+                  / /
+                )
+              )
+            );
+            break;
+          case 33:
+            set(_.sample(["🎉", "🥳"]));
+            document.removeEventListener("click", advance);
+            break;
+          default:
+            do {
+              letter1 = _.sample(LETTERS);
+              letter2 = _.sample(LETTERS);
+              letter3 = _.sample(LETTERS);
+              letter4 = _.sample(SOFIT_LETTERS);
+              vowel1 = _.sample(VOWELS);
+              vowel2 = _.sample(VOWELS);
+              vowel3 = _.sample(VOWELS);
+              challenge =
+                letter1 +
+                vowel1 +
+                letter2 +
+                vowel2 +
+                letter3 +
+                vowel3 +
+                letter4;
+              charsOnly = challenge.replace(/\p{Grapheme_Extend}/, "");
+            } while (
+              ["יהוה"].includes(charsOnly) ||
+              (letter1.startsWith("ש") && vowel1 == "\u05B9") ||
+              (letter2.startsWith("ש") && vowel2 == "\u05B9") ||
+              (letter3.startsWith("ש") && vowel3 == "\u05B9")
+            );
+            set(challenge);
+        }
+      }
+      document.addEventListener("click", advance);
+      advance();
+    </script>
+  </body>
+</html>
